@@ -20,20 +20,20 @@ Feature: Verifying the Login and registration functionality
     When I login with username "invalid@email.com" and password "fake_password"
     Then I should see invalid_credentials message for login
     Given I follow login link in account section
-    When I login with username " " and password " "
+    When I login with username "" and password ""
     Then I should see mandatory_fields message for login
 
 
-#
-#  Scenario: Register a new user and verify successful registration
-#    Given I follow register link in account section
-#    When I click the register button
-#    Then I should see mandatory_fields message for registration
-#    When I follow register link in account section
-#    And I register existing user
-#    And I click the register button
-#    Then I should see existing_user message for registration
-#    When I follow register link in account section
-#    And I register new user
-#    And I click the register button
-#    Then I should see new_user message for registration
+
+  Scenario: Register a new user and verify successful registration
+    Given I follow register link in account section
+    When I click the register button
+    Then I should see mandatory_fields message for registration
+    When I follow register link in account section
+    And I register existing user
+    And I click the register button
+    Then I should see existing_user message for registration
+    When I follow register link in account section
+    And I register new user
+    And I click the register button
+    Then I should see new_user message for registration

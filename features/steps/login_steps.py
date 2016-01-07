@@ -7,9 +7,11 @@ import time
 from behave import *
 from features.pages.login_page import LoginPage
 
+use_step_matcher("re")
 
-@step('I follow {link} link in account section')
-def step(context, link):
+
+@step('I follow ([^"]*) link in account section')
+def step_implementation(context, link):
     login=LoginPage(context.driver)
     login.account_section.click()
     time.sleep(1)
@@ -20,20 +22,20 @@ def step(context, link):
         login.register_link.click()
 
 
-@when('I login with username "{uname}" and password "{pwd}"')
-def step(context, uname, pwd):
+@step('I login with username "([^"]*)" and password "([^"]*)"')
+def step_implementation(context, uname, pwd):
     log=LoginPage(context.driver)
     log.login(uname, pwd)
 
 
-@when('I logout')
-def step(context):
+@step('I logout')
+def step_implementation(context):
     login = LoginPage(context.driver)
     login.logout()
 
 
-@then('I should see {type} message for {action}')
-def step(context,type,action):
+@step('I should see ([^"]*) message for ([^"]*)')
+def step_implementation(context,type,action):
     login = LoginPage(context.driver)
     if action == "login":
         if type == "invalid_credentials":
@@ -51,7 +53,7 @@ def step(context,type,action):
             assert login.success_message.text == "Thank you for registering with Main Website Store."
 
 
-@when('I register {type} user')
-def step(context,type):
+@step('I register ([^"]*) user')
+def step_implementation(context,type):
     login = LoginPage(context.driver)
     login.register_user(type)
