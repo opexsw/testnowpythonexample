@@ -8,6 +8,7 @@ from page_objects import PageObject, PageElement
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from faker import Faker
 
 class DashboardPage(PageObject):
 
@@ -18,7 +19,7 @@ class DashboardPage(PageObject):
     general_subscription_checkbox = PageElement(id_ = "subscription")
     success_message = PageElement(css = "li.success-msg span")
     newsletter_subscription_textbox = PageElement(id_ = "newsletter")
-    subscribe_button = PageElement(css = "//button[@title='Subscribe']")
+    subscribe_button = PageElement(xpath = "//button[@title='Subscribe']")
 
     def __init__(self,driver):
        super(DashboardPage,self).__init__(driver)
@@ -34,4 +35,20 @@ class DashboardPage(PageObject):
         WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.category-products")))
 
 
+    def general_subscription(self,action):
+        if action == "select":
+            if not self.general_subscription_checkbox.is_selected():
+            # if not self.driver.find_element(By.ID,"subscription").is_selected():
+                self.general_subscription_checkbox.click()
+        elif action == "de-select":
+            if self.driver.find_element(By.ID,"subscription").is_selected():
+                self.general_subscription_checkbox.click()
+
+
+    def enter_newsletter_email(self,fresh_or_used):
+        faker = Faker()
+        if fresh_or_used == "fresh":
+            self.newsletter_subscription_textbox = faker.email()
+        elif fresh_or_used == "registered":
+            self.newsletter_subscription_textbox = "admin@mailinator.com"
 
