@@ -9,37 +9,37 @@ from features.pages.checkout_page import CheckoutPage
 
 use_step_matcher("re")
 
-@when('I add to cart the product (?:based on|number) (RUN_INDEX|\d+)')
-def step(context,index):
+@step('I add to cart the product (?:based on|number) (RUN_INDEX|\d+)')
+def step_implementation(context,index):
     checkout = CheckoutPage(context.driver)
     checkout.add_product_to_cart(index)
 
 
-@then('I proceed to checkout')
-def step(context):
+@step('I proceed to checkout')
+def step_implementation(context):
     checkout = CheckoutPage(context.driver)
     checkout.proceed_to_checkout.click()
 
 
-@when('I select checkout method as Guest')
-def step(context):
+@step('I select checkout method as Guest')
+def step_implementation(context):
     checkout = CheckoutPage(context.driver)
     checkout.checkout_as_guest_radio.click()
     checkout.checkout_continue_button.click()
 
 
-@when('I fill all mandatory details in Billing Information as (member|guest)')
-def step(context,type):
+@step('I fill all mandatory details in Billing Information as (member|guest)')
+def step_implementation(context,type):
     checkout = CheckoutPage(context.driver)
     checkout.fill_and_submit_billing_information(type)
 
-@when('I continue with shipping method')
-def step(context):
+@step('I continue with shipping method')
+def step_implementation(context):
     checkout = CheckoutPage(context.driver)
     checkout.continue_with_shipping_method()
 
-@when('I select payment method as "([^"]*)"')
-def step(context,method):
+@step('I select payment method as "([^"]*)"')
+def step_implementation(context,method):
     checkout = CheckoutPage(context.driver)
     if method == "check":
         checkout.payment_check.click()
@@ -53,13 +53,13 @@ def step(context,method):
     checkout.payment_continue_button.click()
 
 
-@when('I place the order')
-def step(context):
+@step('I place the order')
+def step_implementation(context):
     checkout = CheckoutPage(context.driver)
     checkout.place_order_button.click()
 
 
-@then('I should see order confirmation message')
-def step(context):
+@step('I should see order confirmation message')
+def step_implementation(context):
     checkout = CheckoutPage(context.driver)
     checkout.verify_order_confirmation_message()
