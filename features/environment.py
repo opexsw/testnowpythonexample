@@ -1,5 +1,6 @@
 import os
 from selenium import webdriver
+import selenium.webdriver.chrome.service
 
 browser = os.getenv("BROWSER", "firefox")
 har = os.getenv("IS_UPA", "false")
@@ -14,7 +15,17 @@ def before_all(context):
         context.driver.set_page_load_timeout(120)
         context.driver.set_script_timeout(30)
     elif browser == "ie":
-        print("A")
+        caps = webdriver.DesiredCapabilities.INTERNETEXPLORER
+        caps['javascript_enabled'] = True
+        caps['native_events'] = False
+        caps['acceptSslCerts'] = True
+        context.driver = webdriver.Ie(caps)
+        context.driver.maximize_window()
+        context.driver.implicitly_wait(30)
+        context.driver.set_page_load_timeout(120)
+        context.driver.set_script_timeout(30)
+    elif browser == "opera":
+        print "A"
     else:
         if har == "true":
             profile = webdriver.FirefoxProfile()
